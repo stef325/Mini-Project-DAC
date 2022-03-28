@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 public class ValidationService {
     
     public boolean validateAge(int age){
-        return age >18? true : false;
+        return age >=18? true : false;
     }
 
 }

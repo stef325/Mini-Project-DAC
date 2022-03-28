@@ -137,7 +137,6 @@ public class Projetojpa2Application implements CommandLineRunner{
 					int cpfAdopt = Integer.parseInt(scan.nextLine());
 
 					catController.adopt(adoptNome, cpfAdopt);
-					System.out.println("gatinho adotado!");
 					break;
 
 				default:

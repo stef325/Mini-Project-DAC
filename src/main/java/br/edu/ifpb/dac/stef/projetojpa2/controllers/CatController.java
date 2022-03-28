@@ -9,12 +9,8 @@ import org.springframework.stereotype.Controller;
 import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Cat;
 import br.edu.ifpb.dac.stef.projetojpa2.model.service.AdoptionService;
 import br.edu.ifpb.dac.stef.projetojpa2.model.service.CatService;
-import lombok.Getter;
-import lombok.Setter;
 
 @Controller
-@Getter
-@Setter
 public class CatController {
     
     @Autowired
