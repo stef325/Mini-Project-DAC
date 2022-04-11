@@ -18,13 +18,14 @@ public class AdoptionService {
     @Autowired
     private CatDAO catDAO;
     
-    public void adopt(String catName, int adopterCpf){
+    public boolean adopt(String catName, int adopterCpf){
         Person adopter = personService.getOne(adopterCpf);
         if (validationService.validateAge(adopter.getAge())==true) {
            catDAO.setCatDonoById(adopter, catName);
+           return true;
         }
         else{
-            System.out.println("É nescessário ter mais de 18 anos para adotar um gato. Caso seja menor de idade, nescessário responsável.");
+            return false;
         }
         
 

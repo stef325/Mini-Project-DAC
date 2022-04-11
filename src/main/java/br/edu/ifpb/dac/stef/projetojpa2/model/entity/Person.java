@@ -19,7 +19,7 @@ public class Person implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer pId;
+    private Integer id;
 
     private int cpf;
 
@@ -36,12 +36,12 @@ public class Person implements Serializable{
             return false;
         }
         Person person = (Person) o;
-        return Objects.equals(pId, person.pId) && cpf == person.cpf && Objects.equals(name, person.name) && age == person.age;
+        return Objects.equals(id, person.id) && cpf == person.cpf && Objects.equals(name, person.name) && age == person.age;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pId, cpf, name, age);
+        return Objects.hash(id, cpf, name, age);
     }
     
 

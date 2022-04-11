@@ -3,6 +3,9 @@ package br.edu.ifpb.dac.stef.projetojpa2.model.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.stef.projetojpa2.model.dao.PersonDAO;
@@ -14,28 +17,25 @@ public class PersonService {
     private PersonDAO personDAO;
 
     //create
-    public void save(String name,int cpf,int age){
-        Person person = new Person();
-        person.setAge(age);
-        person.setName(name);
-        person.setCpf(cpf);
-
+    public void save(Person person){
         personDAO.save(person);
     }
 
     //read
-    public List<Person> list(){
-        return (List<Person>) personDAO.findAll();
+    public List<Person> find(Person filter){
+        Example<Person> example = Example.of(filter, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
+        return personDAO.findAll(example);
     }
 
+
     //update
-    public void update(int Cpf, String newName, int newAge){
-        personDAO.setPersonInfoById(newName,newAge,Cpf );
+    public void update(Person person){
+        personDAO.save(person);
     }
 
     //delete
-    public void delete(int cpf){
-        personDAO.deleteByCpf(cpf);
+    public void delete(Integer id){
+        personDAO.deleteById(id);
     }
     
 

@@ -3,7 +3,11 @@ package br.edu.ifpb.dac.stef.projetojpa2.model.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
+
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 
 import br.edu.ifpb.dac.stef.projetojpa2.model.dao.CatDAO;
 import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Cat;
@@ -14,23 +18,19 @@ public class CatService {
     private CatDAO CatDAO;
 
     //create
-    public void save(String nome, int idade, String pelagem){
-        Cat cat = new Cat();
-        cat.setAge(idade);
-        cat.setName(nome);
-        cat.setPelagem(pelagem);
-
+    public void save(Cat cat){
         CatDAO.save(cat);
     }
     
     //read
-    public List<Cat> list(){
-        return (List<Cat>) CatDAO.findAll();
+    public List<Cat> find(Cat filter){
+        Example example = Example.of(filter, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
+        return CatDAO.findAll(example);
     }
 
     //update
-    public void update(String nome, String newName, int newAge, String newPelagem){
-        CatDAO.setCatInfoById(newName,newAge,newPelagem,nome);
+    public void update(Cat cat){
+        CatDAO.save(cat);
         
     }
 

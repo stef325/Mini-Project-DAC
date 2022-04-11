@@ -8,13 +8,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.edu.ifpb.dac.stef.projetojpa2.controllers.CatController;
-import br.edu.ifpb.dac.stef.projetojpa2.controllers.PersonController;
 import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Cat;
 import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Person;
+import br.edu.ifpb.dac.stef.projetojpa2.presentation.controllers.CatController;
+import br.edu.ifpb.dac.stef.projetojpa2.presentation.controllers.PersonController;
 
 @SpringBootApplication
-public class Projetojpa2Application implements CommandLineRunner{
+public class Projetojpa2Application{
 	
 	@Autowired
 	private CatController catController;
@@ -25,7 +25,7 @@ public class Projetojpa2Application implements CommandLineRunner{
 	public static void main(String[] args) {
 		SpringApplication.run(Projetojpa2Application.class, args);
 	}
-
+/*
 	@Override
 	public void run(String... args) throws Exception {
 		Scanner scan = new Scanner(System.in);
@@ -147,5 +147,5 @@ public class Projetojpa2Application implements CommandLineRunner{
 		}
 		scan.close(); 
 	}
-
+*/
 }

@@ -1,9 +1,9 @@
 package br.edu.ifpb.dac.stef.projetojpa2.model.dao;
 
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,11 +11,8 @@ import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Cat;
 import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Person;
 
 @Repository
-public interface CatDAO extends PagingAndSortingRepository<Cat,Integer>{
-    @Transactional
-    @Modifying
-    @Query("update Cat c set c.name = ?1, c.age = ?2, c.pelagem = ?3 where c.name = ?4")
-    void setCatInfoById(String name, int age, String pelagem, String oldName);
+public interface CatDAO extends JpaRepository<Cat,Integer>{
+    
 
     Cat findByName(String catName);
     
