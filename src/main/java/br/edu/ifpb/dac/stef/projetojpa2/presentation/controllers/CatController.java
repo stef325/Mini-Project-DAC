@@ -16,14 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifpb.dac.stef.projetojpa2.business.service.AdoptionService;
+import br.edu.ifpb.dac.stef.projetojpa2.business.service.CatService;
+import br.edu.ifpb.dac.stef.projetojpa2.business.service.ConverterService;
 import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Cat;
-import br.edu.ifpb.dac.stef.projetojpa2.model.service.AdoptionService;
-import br.edu.ifpb.dac.stef.projetojpa2.model.service.CatService;
+import br.edu.ifpb.dac.stef.projetojpa2.presentation.dto.CatDTO;
 
 @RestController
 @RequestMapping("/api/cat")
 public class CatController {
     
+    @Autowired
+    private ConverterService converter;
+
     @Autowired
     private CatService catService;
     
@@ -32,10 +37,12 @@ public class CatController {
 
     //create
     @PostMapping
-    public ResponseEntity save(@RequestBody Cat cat){
+    public ResponseEntity save(@RequestBody CatDTO dto){
         try {
-            catService.save(cat);
-            return new ResponseEntity(cat,HttpStatus.CREATED);
+            Cat entity = converter.DTOToCat(dto);
+            catService.save(entity);
+            dto = converter.CatToDTO(entity);
+            return new ResponseEntity(dto,HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -44,7 +51,7 @@ public class CatController {
     //read
     @GetMapping
     public ResponseEntity find(
-        @RequestParam(value = "age", required= false) int age,
+        @RequestParam(value = "age", required= false) Integer age,
         @RequestParam(value = "pelagem", required= false) String pelagem,
         @RequestParam(value = "name", required= false) String name,
         
@@ -59,7 +66,8 @@ public class CatController {
             filter.setPelagem(pelagem);
 
             List<Cat> entities = catService.find(filter);
-            return ResponseEntity.ok(entities);
+            List<CatDTO> dtos = converter.CatToDTO(entities);
+            return ResponseEntity.ok(dtos);
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -69,11 +77,14 @@ public class CatController {
 
     //update
     @PutMapping("{id}")
-    public ResponseEntity update(@PathVariable("id") Integer id, @RequestBody Cat cat){
+    public ResponseEntity update(@PathVariable("id") Integer id, @RequestBody CatDTO dto){
         try {
-            cat.setId(id);
-            catService.update(cat);
-            return ResponseEntity.ok(cat);
+            dto.setId(id);
+            Cat entity = converter.DTOToCat(dto);
+            catService.update(entity);
+            dto = converter.CatToDTO(entity);
+
+            return ResponseEntity.ok(dto);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -87,7 +98,7 @@ public class CatController {
         try {
             boolean adoptstate = adoptionService.adopt(catName, adopterCpf);
 
-            if (adoptstate = true) {
+            if (adoptstate == true) {
                 return new ResponseEntity("Adopted",HttpStatus.CREATED);
             }
             else{

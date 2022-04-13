@@ -21,11 +21,11 @@ public class Person implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private int cpf;
+    private Long cpf;
 
     private String name;
     
-    private int age;
+    private Integer age;
 
 
     @Override

@@ -1,4 +1,4 @@
-package br.edu.ifpb.dac.stef.projetojpa2.model.service;
+package br.edu.ifpb.dac.stef.projetojpa2.business.service;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class CatService {
     
     //read
     public List<Cat> find(Cat filter){
-        Example example = Example.of(filter, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
+        Example<Cat> example = Example.of(filter, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
         return CatDAO.findAll(example);
     }
 

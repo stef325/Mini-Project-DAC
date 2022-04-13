@@ -15,22 +15,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifpb.dac.stef.projetojpa2.business.service.ConverterService;
+import br.edu.ifpb.dac.stef.projetojpa2.business.service.PersonService;
 import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Person;
-import br.edu.ifpb.dac.stef.projetojpa2.model.service.PersonService;
+import br.edu.ifpb.dac.stef.projetojpa2.presentation.dto.PersonDTO;
 
 @RestController
 @RequestMapping("/api/person")
 public class PersonController {
-    
+    @Autowired
+    private ConverterService converter;
+
     @Autowired
     private PersonService personService;
     
     //create
     @PostMapping
-    public ResponseEntity save(@RequestBody Person person){
+    public ResponseEntity save(@RequestBody PersonDTO dto){
         try {
-            personService.save(person);
-            return new ResponseEntity(person,HttpStatus.CREATED);
+            Person entity = converter.DTOToPerson(dto);
+            personService.save(entity);
+            dto = converter.PersonToDTO(entity);
+
+            return new ResponseEntity(dto,HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -39,9 +46,9 @@ public class PersonController {
     //read
     @GetMapping
     public ResponseEntity find(
-        @RequestParam(value = "cpf", required= false) int cpf,
+        @RequestParam(value = "cpf", required= false) Long cpf,
         @RequestParam(value = "name", required= false) String name,
-        @RequestParam(value = "age", required= false) int age,
+        @RequestParam(value = "age", required= false) Integer age,
         @RequestParam(value = "id", required= false) Integer id
     )
     {
@@ -53,7 +60,8 @@ public class PersonController {
             filter.setName(name);
 
             List<Person> entities = personService.find(filter);
-            return ResponseEntity.ok(entities);
+            List<PersonDTO> dtos = converter.PersonToDTO(entities);
+            return ResponseEntity.ok(dtos);
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -63,11 +71,14 @@ public class PersonController {
 
     //update
     @PutMapping("{id}")
-    public ResponseEntity update(@PathVariable("id") Integer id,@RequestBody Person person){
+    public ResponseEntity update(@PathVariable("id") Integer id,@RequestBody PersonDTO dto){
         try {
-            person.setId(id);
-            personService.update(person);
-            return ResponseEntity.ok(person);
+            dto.setId(id);
+            Person entity = converter.DTOToPerson(dto);
+            personService.update(entity);
+            dto = converter.PersonToDTO(entity);
+
+            return ResponseEntity.ok(dto);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -1,26 +1,14 @@
 package br.edu.ifpb.dac.stef.projetojpa2;
 
-import java.util.List;
-import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Cat;
-import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Person;
-import br.edu.ifpb.dac.stef.projetojpa2.presentation.controllers.CatController;
-import br.edu.ifpb.dac.stef.projetojpa2.presentation.controllers.PersonController;
 
 @SpringBootApplication
 public class Projetojpa2Application{
 	
-	@Autowired
-	private CatController catController;
 
-	@Autowired
-	private PersonController personController;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Projetojpa2Application.class, args);

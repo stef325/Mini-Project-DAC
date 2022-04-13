@@ -1,4 +1,4 @@
-package br.edu.ifpb.dac.stef.projetojpa2.model.service;
+package br.edu.ifpb.dac.stef.projetojpa2.business.service;
 
 import org.springframework.stereotype.Service;
 

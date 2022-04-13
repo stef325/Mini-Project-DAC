@@ -22,7 +22,7 @@ public class Cat implements Serializable{
     private Integer id;
     
     private String name;
-    private int age;
+    private Integer age;
     private String pelagem;
 
     @ManyToOne(fetch = FetchType.EAGER)
