@@ -8,7 +8,7 @@ import br.edu.ifpb.dac.stef.projetojpa2.model.entity.Person;
 
 @Repository
 public interface PersonDAO extends JpaRepository<Person, Integer>{
-    Person findByCpf(int Cpf);
+    Person findByCpf(Long Cpf);
     Person findByName(String Name);
 
 

@@ -39,7 +39,7 @@ public class PersonService {
     }
     
 
-    public Person getOne(int Cpf){
+    public Person getOne(Long Cpf){
         return personDAO.findByCpf(Cpf);
     }
 }

@@ -14,6 +14,6 @@ public class CatDTO {
     private Integer age;
     private String pelagem;
 
-    private Person dono;
+    private String dono;
     
 }

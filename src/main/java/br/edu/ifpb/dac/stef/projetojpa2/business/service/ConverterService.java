@@ -60,13 +60,15 @@ public class ConverterService {
         dto.setId(cat.getId());
         dto.setName(cat.getName());
         dto.setPelagem(cat.getPelagem());
-        dto.setDono(cat.getDono());
+        Person dono = cat.getDono();
+        dto.setDono(dono==null? "Sem dono": dono.getName());
 
         return dto;
     }
 
     public Cat DTOToCat(CatDTO dto){
         Cat cat = new Cat();
+        cat.setId(dto.getId());
         cat.setAge(dto.getAge());
         cat.setName(dto.getName());
         cat.setPelagem(dto.getPelagem());

@@ -18,7 +18,7 @@ public class AdoptionService {
     @Autowired
     private CatDAO catDAO;
     
-    public boolean adopt(String catName, int adopterCpf){
+    public boolean adopt(String catName, Long adopterCpf){
         Person adopter = personService.getOne(adopterCpf);
         if (validationService.validateAge(adopter.getAge())==true) {
            catDAO.setCatDonoById(adopter, catName);

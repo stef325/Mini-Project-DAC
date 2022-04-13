@@ -94,7 +94,7 @@ public class CatController {
 
     
     @PostMapping("/adopt")
-    public ResponseEntity adopt(@PathVariable("catName") String catName,@PathVariable("adopterCpf") int adopterCpf){
+    public ResponseEntity adopt(@RequestParam String catName,@RequestParam Long adopterCpf){
         try {
             boolean adoptstate = adoptionService.adopt(catName, adopterCpf);
 
